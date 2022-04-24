@@ -1,5 +1,32 @@
 
-// $Id: CaesString.cpp 154 2018-08-14 11:24:57Z duncang $
+
+//=================================================================================================
+// Original File Name : CaesString.cpp
+// Original Author    : catraeus
+// Creation Date      : Apr 17, 2022
+// Copyright          : Copyright © 2022 by Catraeus and Duncan Gray
+//
+// Description        :
+/*
+   String Functions that do really cool things.
+*/
+//
+//=================================================================================================
+/*
+This file is part of Catraeus Libraries.
+
+Catraeus Libraries is free software: you can redistribute it and/or modify it under the terms of
+  the GNU Lesser General Public License as published by the Free Software Foundation, either
+  version 3 of the License, or (at your option) any later version.
+
+Catraeus Libraries is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
+  the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with dmmsnoop.
+  If not, see <https://www.gnu.org/licenses/>.
+*/
+//=================================================================================================
 
 #include <string.h>
 #include <stdio.h>
@@ -8,8 +35,8 @@
 #include <math.h>
 #include <errno.h>
 
-const static char *oomPrefix = (const char *)"afpnum.kMGTP";
-const static char *oomHexLookup = (const char *)"0123456789ABCDEF";
+const static char *oomPrefix    = (const char *)"afpnum.kMGTP";      // atto, femto yada yada yada Peta
+const static char *oomHexLookup = (const char *)"0123456789ABCDEF";  // Fast and furious, no c format overhead
 
 enum  eSciEng        {ESE_ENG,   ESE_SCI                       };
 enum  eStrEngState   {ESES_MANT, ESES_EXP, ESES_DONE, ESES_BAD };

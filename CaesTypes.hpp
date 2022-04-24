@@ -1,15 +1,31 @@
 
-// $Id: CaesTypes.hpp 178 2019-07-15 02:49:01Z duncang $
 
 //=================================================================================================
-// Original File Name : CaesTypes.h
-// Original Author    : duncang
-// Creation Date      : 2009-03-11
-// Copyright          : Copyright © 2011 by Catraeus and Duncan Gray
+// Original File Name : CaesTypes.hpp
+// Original Author    : catraeus
+// Creation Date      : Apr 17, 2022
+// Copyright          : Copyright © 2022 by Catraeus and Duncan Gray
 //
 // Description        :
-//    A pretty damned global kind of thing
+/*
+   I do like short type names.
+*/
 //
+//=================================================================================================
+/*
+This file is part of Catraeus Libraries.
+
+Catraeus Libraries is free software: you can redistribute it and/or modify it under the terms of
+  the GNU Lesser General Public License as published by the Free Software Foundation, either
+  version 3 of the License, or (at your option) any later version.
+
+Catraeus Libraries is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
+  the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with dmmsnoop.
+  If not, see <https://www.gnu.org/licenses/>.
+*/
 //=================================================================================================
 
 #ifndef _CAES_TYPES_HPP_
