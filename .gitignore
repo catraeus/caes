@@ -1,0 +1,7 @@
+Debug/*.so
+Debug/src/*.o
+Debug/src/*.d
+/Release/*.so
+Release/src/*.o
+Release/src/*.d
+

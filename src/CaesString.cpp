@@ -30,10 +30,11 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 #include <string.h>
 #include <stdio.h>
-#include "CaesTypes.hpp"
-#include "CaesString.hpp"
 #include <math.h>
 #include <errno.h>
+
+#include <caesbase/CaesTypes.hpp>
+#include <caesbase/CaesString.hpp>
 
 const static char *oomPrefix    = (const char *)"afpnum.kMGTP";      // atto, femto yada yada yada Peta
 const static char *oomHexLookup = (const char *)"0123456789ABCDEF";  // Fast and furious, no c format overhead
