@@ -6,7 +6,7 @@
 // Original Author    : duncang
 // Created on         : Dec 31, 2007
 // Copyright          : Copyright © 2007 - 2017 by Catraeus and Duncan Gray
-// Description        : Vector functions to do many things.
+// Description        : Many functions to do many things.
 //=================================================================================================
 
 
