@@ -248,6 +248,8 @@ inline int      caes_float2int        ( float  flt  ) {
     pOut++;
     wholeCount++;
   }
+  completeness = 1.0;
+  if(Report != NULL) Report(&completeness, ClasPtr);
   return;
 }
 //==  Numbers, Integers
