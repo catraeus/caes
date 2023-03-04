@@ -32,37 +32,37 @@ You should have received a copy of the GNU Lesser General Public License along w
 #define _CAES_TYPES_HPP_
 
 
-typedef unsigned      char   uchar;
-typedef unsigned      char   ubyte;
-typedef unsigned      char   byte;
-typedef signed        char   sbyte;
-typedef unsigned      short  ushort;
-typedef unsigned             int    uint;
-typedef unsigned      long   int    ulong;
-typedef          long long   int    llong;
-typedef unsigned long long   int    ullong;
-typedef signed        short  word;
-typedef unsigned      short  field;
-typedef long          double ldouble;
+typedef unsigned      char           uchar;
+typedef unsigned      char           ubyte;
+typedef signed        char           sbyte;
+typedef unsigned      char            byte;
+typedef unsigned      short          ushort;
+typedef unsigned             int     uint;
+typedef unsigned      long           ulong;
+typedef signed   long long           llong;
+typedef unsigned long long          ullong;
+typedef signed        short           word;
+typedef unsigned      short           field;
+typedef               long   double  ldouble;
 
-static const double PI=3.14159265358979323846264338327950288419716939937510;
-static const double EMGAMMA=0.57721566490153286060651209008240243104215933593992;
-static const double E=2.71828182845904523536028747135266249775724709369995;
-static const double SQ2=1.41421356237309504880168872420969807856967187537694;
-static const double SQv2=0.70710678118654752440084436210484903928483593768847;
+static const ldouble PI              = 3.14159265358979323846264338327950288419716939937510;
+static const ldouble EMGAMMA         = 0.57721566490153286060651209008240243104215933593992;
+static const ldouble E               = 2.71828182845904523536028747135266249775724709369995;
+static const ldouble SQ2             = 1.41421356237309504880168872420969807856967187537694;
+static const ldouble SQv2            = 0.70710678118654752440084436210484903928483593768847;
 
-static const double PIx2=2.0 * PI;
-static const double PIv2=0.5 * PI;
+static const ldouble PIx2            = 2.0 * PI;
+static const ldouble PIv2            = 0.5 * PI;
 
-static const double DBL_ROUNDER=0.4999999999999999;
-static const double DBL_EPS=((double)2.22044604925031308085e-16L) * (double)2.0L;// for no damned good reason but intuition.  DBL_EPSILON is defined in Config_Heavy.pl to make math dynamic libs.
-static const llong MAX_PATH_LEN=32768;
-static const llong MAX_NAME_LEN=256;
-static const llong MAX_LINE_LEN=32768;
-static const llong MAX_LIST_LEN=32768;
-static const llong MAX_CFG_LINES=32768;
-static const llong MIN_PATH_LEN=256;
-static const llong MAX_DIR_ENTRIES=32768;
+static const ldouble DBL_ROUNDER     =         0.4999999999999999;
+static const ldouble DBL_EPS         =((double)2.22044604925031308085e-16L) * (double)2.0L;// for no damned good reason but intuition.  DBL_EPSILON is defined in Config_Heavy.pl to make math dynamic libs.
+static const llong   MAX_PATH_LEN    = 32768;
+static const llong   MAX_NAME_LEN    =   256;
+static const llong   MAX_LINE_LEN    = 32768;
+static const llong   MAX_LIST_LEN    = 32768;
+static const llong   MAX_CFG_LINES   = 32768;
+static const llong   MIN_PATH_LEN    =   256;
+static const llong   MAX_DIR_ENTRIES = 32768;
 
 
 #if __BYTE_ORDER == __LITTLE_ENDIAN

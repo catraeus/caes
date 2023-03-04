@@ -133,32 +133,34 @@ void   Remez::NormRMS        ( void        ) {
     taps[i] /= rms;
   return;
 }
-void   Remez::NormSF         ( ldouble i_fs   ) {
-  llong  i;
-  ldouble rms;
-  ldouble dPh;
-  ldouble ph;
-  ldouble phOff;
-  ldouble t;
-  ldouble c;
+void   Remez::NormSF         ( ldouble i_sf   ) {
+  llong    i;
+  ldouble  convo1;
+  ldouble  dPh;
+  ldouble  ph;
+  ldouble  phOff;
+  ldouble  t;
+  ldouble  c;
 
-  phOff  = (ldouble)(iN - 1);
-  phOff *= -0.5;
 
-  dPh = i_fs * 2.0 * PI;
+  if(i_sf >= 0.5) i_sf = 0.0;
+  if(i_sf <  0.0) i_sf = 0.0;
+  // IMPORTANT This whole normalization thing is only valid because of a bunch of symmetry assumptions.
+  phOff = ((iN ^ 2) == 1) ? 0.0 : - PI;
+  dPh = i_sf * PIx2;
 
-  rms = 0.0;
-  for(i = 0; i < iN; i++) {
-    ph = phOff + dPh * (ldouble)i;
-    t = taps[i];
-    c = cos(ph);
-    rms += t*t*c*c;
+  convo1 = 0.0;
+  ph  = phOff;
+  for(i = 0; i < iN; i++) {  // test frequency is 1.0 = peak
+    ph  += dPh;
+    if(phOff > PIx2) phOff -= PIx2; // IMPORTANT, assumes the i_sf is Nyquist-compliant
+    t    = taps[i];
+    c    = cos(ph);
+    convo1 += t*c;
   }
-  rms /= (ldouble)iN;
-  rms *= 2.0;
-  rms = sqrt(rms);
+  convo1 = 1.0 / convo1;
   for(i=0; i<iN; i++)
-    taps[i] /= rms;
+    taps[i] *= convo1;
   return;
 }
 void   Remez::NormPeak       ( void        ) {
