@@ -64,6 +64,15 @@ static const llong   MAX_CFG_LINES   = 32768;
 static const llong   MIN_PATH_LEN    =   256;
 static const llong   MAX_DIR_ENTRIES = 32768;
 
+static const llong   GCC_FLOAT_LD_EXP  =  15; //
+static const llong   GCC_FLOAT_LD_MANT =  64; // Unlike IEEE the MSB isn't implicit
+                                              // The upper 48 bits are waaasted!
+static const llong   GCC_FLOAT_LD_MASK_SIGN = 0x0000000000008000;
+static const llong   GCC_FLOAT_LD_MASK_EXP  = 0x0000000000007fff; // sure enough, 15 bit.
+static const llong   GCC_FLOAT_LD_MASK_MANT = 0xffffffffffffffff; // reblinkulous since the whole lower byte is the mantissa
+
+
+
 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
 #define PACK_08_TO_32(a,b,c,d)  ((a) | ((b)<<8) | ((c)<<16) | ((d)<<24))

@@ -41,8 +41,9 @@ ullong  ReverseBits           ( ullong  x,  ullong   N );
 //==  Numbers, Real
 ullong  Log2                  ( ullong  N            );
 ullong  NextPowTwo            ( ullong  i            );
-ldouble pow10                 ( long double  x       );
+ldouble pow10                 ( ldouble x            );
 bool    IsPowTwo              ( ullong  x            );
+ldouble floorld               ( ldouble x            );
 //==  Stats
 double  caes_RandRect         ( void                 );
 void    caes_RandGaussVec     ( ullong N, double **v );

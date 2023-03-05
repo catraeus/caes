@@ -143,11 +143,14 @@ void   Remez::NormSF         ( ldouble i_sf   ) {
   ldouble  c;
 
 
-  if(i_sf >= 0.5) i_sf = 0.0;
+  if(i_sf >= 0.5) i_sf = 0.5;
   if(i_sf <  0.0) i_sf = 0.0;
   // IMPORTANT This whole normalization thing is only valid because of a bunch of symmetry assumptions.
-  phOff = ((iN ^ 2) == 1) ? 0.0 : - PI;
-  dPh = i_sf * PIx2;
+  phOff  = ((ldouble)iN - 1.0) * 0.5;
+  phOff *= i_sf;
+  phOff  = floorld(phOff + DBL_EPS);
+  phOff *= PIx2;
+  dPh    = i_sf * PIx2;
 
   convo1 = 0.0;
   ph  = phOff;

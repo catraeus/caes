@@ -333,9 +333,70 @@ inline int      caes_float2int        ( float  flt  ) {
   else
     return true;
   }
-       ldouble  pow10                 ( ldouble x            ) {
+       ldouble  pow10                 ( ldouble x   ) {
   long double z;
   z = powl((long double)10.0, x);
+  return z;
+}
+       ldouble  floorld               ( ldouble x  ) {
+  ldouble z;
+  typedef union u_wu{
+    ldouble re; // for real
+    ullong  nf[2]; // for number field
+  } wu;
+  ullong expu;
+  ullong frac;
+  llong  exp;
+  ullong mant;
+  llong  sign;
+  wu     working;
+
+
+  working.nf[0] = 0;
+  working.nf[1] = 0;
+  working.re    = x;
+
+  if(working.nf[1] & GCC_FLOAT_LD_MASK_SIGN)
+    sign = -1LL;
+  else
+    sign =  1LL;
+  expu       = working.nf[1] & GCC_FLOAT_LD_MASK_EXP;
+  expu     >>=  0;
+  exp        = expu;
+  exp       -= 16383;
+
+  mant       = working.nf[0];
+
+  if(x == 0.0) {
+    exp  = 0;
+    mant = 0;
+    sign = 0;
+    z    = 0.0;
+  }
+  else {
+    if(exp >= 0) {
+      if(exp <= 63L) {
+        if(exp == 63)
+          frac = 0;
+        else
+          frac   = 0xffffffffffffffff >> (exp + 1);
+        frac   = frac & mant;
+        mant >>= 63L - exp;
+        exp    = 0;
+        z      = (ldouble)mant * sign;
+        if((frac > 0) && (sign == -1))
+          z -= 1.0;   // WARNING, this fails near bigno boundaries.
+      }
+      else {
+        exp -= 32; // Leave in an accurate state for future generations
+        z    = x;  // FIXME - This might need more head-scratching for big negatives
+      }
+    }
+    else { // FIXME puts lots of stuff to dig out fraction.  Gets funky
+      if(sign >= 0)    z =  0.0;
+      else             z = -1.0;
+    }
+  }
   return z;
 }
 //==  Stats
