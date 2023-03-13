@@ -18,198 +18,163 @@
 #include <sigc++/sigc++.h>
 #include <stdio.h>
 
-     Stat::Stat         ( llong   i_N, double **i_ary, llong i_ch) {
-  m      = NULL;
-  s      = NULL;
-  a      = NULL;
-  b      = NULL;
-  g      = NULL;
-  min    = NULL;
-  minOff = NULL;
-  max    = NULL;
-  maxOff = NULL;
-  rr     =  0.00;
-  SetVec(i_N, i_ary, i_ch);
-}
      Stat::Stat         ( void        ) {
-  m      = NULL;
-  s      = NULL;
-  a      = NULL;
-  b      = NULL;
-  g      = NULL;
-  min    = NULL;
-  minOff = NULL;
-  max    = NULL;
-  maxOff = NULL;
-  rr     =  0.00;
-  SetVec(0, NULL, 0);
+  SetVec(0, NULL);
 }
      Stat::~Stat        ( void        ) {
-  SetVec(0, NULL, 0);
+  SetVec(0, NULL);
 }
-void Stat::Calc         ( void        ) {
+void Stat::CalcNormal   ( void        ) {
   CalcM    ();
   CalcS    ();
   CalcMin  ();
   CalcMax  ();
-  CalcRr   ();
   return;
 }
+bool Stat::CalcTaylor3  ( double *o_t0, double *o_t1, double *o_t2) {
+  bool result;
+
+  double dN; // Double of N
+  double dE; // Double of End Integer for Unit Spacing
+  double dI; // Double of delta for Unit Width
+
+  double x;
+
+  double S20;
+  double S40;
+  double S11;
+  double S21;
+
+  dN = (double)N;
+  dE = (double)(N - 1) * 0.5L;
+
+  S20 = 0.0;
+  S40 = 0.0;
+  S11 = 0.0;
+  S21 = 0.0;
+
+  for(llong i=0; i<N; i++) {
+    x =
+    S20 += x * x;
+  }
+
+  *o_t0 = 1.0;
+  *o_t1 = 0.707;
+  *o_t2 = 0.003101;
+
+  result = true;
+  return result;
+}
 void Stat::CalcM        ( void        ) {
-  const llong    NN = N;
-        double  *vv;
-        double   xx;
+
   if(!valid)
     return;
-  for(int j=0; j<ch; j++) {
-    xx = 0.0;
-    vv = ary[j];
-    for(int i=0; i<NN; i++)
-      xx += vv[i];
-    xx /= (double)NN;
-    m[j] = xx;
-    }
+  m = 0.0;
+  for(int i=0; i<N; i++)
+    m += vec[i];
+  m /= (double)N;
+  dirty = false;
   return;
   }
 void Stat::CalcS        ( void        ) {
-  const llong    NN = N;
-        double  *vv;
-        double   xx;
-        double   ss;
-        double   mm;
+  double   xx;
+
   if(!valid)
     return;
-  for(int j=0; j<ch; j++) {
-    ss = 0.0;
-    mm = m[j];
-    vv = ary[j];
-    for(int i=0; i<NN; i++) {
-      xx  = vv[i] - mm;
-      xx *= xx;
-      ss += xx;
-      }
-    ss /= (double)NN;
-    ss = sqrt(ss);
-    s[j] = ss;
+  s = 0.0;
+  for(int i=0; i<N; i++) {
+    xx  = vec[i] - m;
+    xx *= xx;
+    s  += xx;
     }
+  s /= (double)N;
+  s = sqrt(s);
   return;
   }
 void Stat::CalcMin      ( void        ) {
-  const llong    NN = N;
-        double  *vv;
-        double   xx;
-        llong    oo;
+
   if(!valid)
     return;
-  for(int j=0; j<ch; j++) {
-    xx = 1.0e302;
-    vv = ary[j];
-    oo = 0;
-    for(int i=0; i<NN; i++)
-      if(xx > vv[i]) {
-        xx = vv[i];
-        oo = i;
-      }
-    min   [j] = xx;
-    minOff[j] = oo;
+  min = 1.0e302;
+  minOff = 0;
+  for(int i=0; i<N; i++)
+    if(min > vec[i]) {
+      min = vec[i];
+      minOff = i;
     }
   return;
   }
 void Stat::CalcMax      ( void        ) {
-  const llong    NN = N;
-        double  *vv;
-        double   xx;
-        llong    oo;
+
   if(!valid)
     return;
-  for(int j=0; j<ch; j++) {
-    xx = -1.0e302;
-    vv = ary[j];
-    oo = 0;
-    for(int i=0; i<NN; i++)
-      if(xx < vv[i]) {
-        xx = vv[i];
-        oo = i;
-      }
-    max   [j] = xx;
-    maxOff[j] = oo;
+  max = -1.0e302;
+  maxOff = 0;
+  for(int i=0; i<N; i++)
+    if(max < vec[i]) {
+      max = vec[i];
+      maxOff = i;
     }
   return;
   }
-void Stat::CalcRr       ( void        ) {
-  if(ch == 2) {
-    const llong    NN = N;
-          double  *v0;
-          double  *v1;
-          double   xx;
-          double   ss;
-          double   m0;
-          double   m1;
+void Stat::CalcRr       ( Stat *i_st  ) {
+  double  *v0;
+  double  *v1;
+  double   xx;
+  double   ss;
+  double   m0;
+  double   m1;
+
+  if(i_st != NULL) {
     if(!valid)
       return;
+    if(i_st->GetN() != N)
+      return;
+    if(i_st->dirty) {
+      i_st->CalcM();
+      i_st->CalcS();
+    }
     ss = 0.0;
-    m0 = m[0];
-    m1 = m[1];
-    v0 = ary[0];
-    v1 = ary[1];
-    for(int i=0; i<NN; i++) {
+    m0 = m;
+    m1 = i_st->GetM();
+    v0 = vec;
+    v1 = i_st->GetVec();
+    for(llong i=0; i<N; i++) {
       xx  = v0[i] - m0;
       xx *= v1[i] - m1;
       ss += xx;
-      }
-    ss /= (double)NN;
-    ss /= s[0];
-    ss /= s[1];
+    }
+    ss /= (double)N;
+    ss /= s;
+    ss /= i_st->GetS();
     rr = ss;
     }
   else
     rr = 0.0;
   return;
-  }
-void Stat::SetVec       ( llong   i_N, double **i_ary, llong i_ch) {
-  valid = false;
-  if(m        != NULL)   { delete m;        m        = NULL; }
-  if(s        != NULL)   { delete s;        s        = NULL; }
-  if(a        != NULL)   { delete g;        a        = NULL; }
-  if(b        != NULL)   { delete b;        b        = NULL; }
-  if(g        != NULL)   { delete a;        g        = NULL; }
-  if(min      != NULL)   { delete min;      min      = NULL; }
-  if(minOff   != NULL)   { delete minOff;   minOff   = NULL; }
-  if(max      != NULL)   { delete max;      max      = NULL; }
-  if(maxOff   != NULL)   { delete maxOff;   maxOff   = NULL; }
+}
+void Stat::SetVec       ( llong   i_N, double *i_vec) {
 
-  N        = 0;
-  ary      = NULL;
-  ch       = 0;
-  valid    = false;
-  dirty    = true;
-  // TODO  Make a test for a maximum number of input channels, maybe.
-  if((i_N != 0) && (i_ary != NULL) && (i_ch != 0)) {
+  if(i_N > 0) {
     N        = i_N;
-    ary      = i_ary;
-    ch       = i_ch;
-    m        = new double[ch];
-    s        = new double[ch];
-    a        = new double[ch];
-    b        = new double[ch];
-    g        = new double[ch];
-    min      = new double[ch];
-    minOff   = new llong [ch];
-    max      = new double[ch];
-    maxOff   = new llong [ch];
-    for(int i=0; i<ch; i++) {
-      m[i]        = 0.0;
-      s[i]        = 0.0;
-      a[i]        = 0.0;
-      b[i]        = 0.0;
-      g[i]        = 0.0;
-      min[i]      = 0.0;
-      minOff[i]   = 0;
-      max[i]      = 0.0;
-      maxOff[i]   = 0;
-      }
-    }
-  rr       = 0.0;
-  valid = true;
-  return;
+    valid    = true;
+    vec      = i_vec;
   }
+  else {
+    N = 0;
+    valid = false;
+    vec = NULL;
+  }
+  m        = 0.0;
+  s        = 0.0;
+  a        = 0.0;
+  b        = 0.0;
+  g        = 0.0;
+  min      = 0.0;
+  minOff   = 0;
+  max      = 0.0;
+  maxOff   = 0;
+  rr       = 0.0;
+  dirty    = true;
+  return;
+}
