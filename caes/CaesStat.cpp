@@ -35,32 +35,50 @@ bool Stat::CalcTaylor3  ( double *o_t0, double *o_t1, double *o_t2) {
   bool result;
 
   double dN; // Double of N
-  double dE; // Double of End Integer for Unit Spacing
+  double dW; // The ((N-1)/2) number that is so magical.
+  double dE; // Double of End Integer for Unit Width (-1.0 duh)
   double dI; // Double of delta for Unit Width
 
   double x;
+  double ttt;
+  double sumX2;
+  double sumX4;
+  double sumY;
+  double sumXY;
+  double sumX2Y;
 
-  double S20;
-  double S40;
-  double S11;
-  double S21;
+  double S20; // One of the terms from equation
+  double S40; // One of the terms from equation
+  double S11; // One of the terms from equation
+  double S21; // One of the terms from equation
 
-  dN = (double)N;
-  dE = (double)(N - 1) * 0.5L;
+  dN = (double) N;
+  dE = -1.0D;
+  dW = (dN - 1.0D) / 2.0D;
+  dI =  2.0D / (dN - 1.0D);
+  sumX2 = (dW / 3.0D + 0.5D + 1.0D / dW / 6.0D                               ) * 2.0D;
+  sumX4 = (dW / 5.0D + 0.5D + 1.0D / dW / 3.0D - 1.0D /pow(dW, 3.0D) / 30.0D ) * 2.0D;
 
-  S20 = 0.0;
-  S40 = 0.0;
-  S11 = 0.0;
-  S21 = 0.0;
-
+  sumY   = 0.0D;
+  sumXY  = 0.0D;
+  sumX2Y = 0.0D;
   for(llong i=0; i<N; i++) {
-    x =
-    S20 += x * x;
+    x       = dE + (double)i * dI;
+    ttt     = x * vec[i];
+    sumY   += vec[i];
+    sumXY  += ttt;
+    ttt    *= x;
+    sumX2Y += ttt;
   }
 
-  *o_t0 = 1.0;
-  *o_t1 = 0.707;
-  *o_t2 = 0.003101;
+  S20 = sumX2;
+  S40 = sumX4 - sumX2*sumX2/dN;
+  S11 = sumXY;
+  S21 = sumX2Y - sumX2*sumY/dN;
+
+  *o_t2 = S21/S40;
+  *o_t1 = S11/S20;
+  *o_t0 = m - (*o_t2)*sumX2/dN;
 
   result = true;
   return result;
