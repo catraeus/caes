@@ -79,6 +79,8 @@ bool Stat::CalcTaylor3  ( double *o_t0, double *o_t1, double *o_t2) {
   *o_t2 = S21/S40;
   *o_t1 = S11/S20;
   *o_t0 = m - (*o_t2)*sumX2/dN;
+  double fComp = (dN - 1.0D) / 2.0D;
+  *o_t1 /= fComp; // as if FS was 1.0;
 
   result = true;
   return result;
