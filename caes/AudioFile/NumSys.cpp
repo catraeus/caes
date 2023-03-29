@@ -32,14 +32,14 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <caes/AudioFile/NumSys.hpp>
 
 char *NumSys::typeNames[] = {
-    ((char[]){'I', 'n', 't', '0', '0', '\0'}),
-    ((char[]){'I', 'n', 't', '1', '6', '\0'}),
-    ((char[]){'I', 'n', 't', '2', '4', '\0'}),
-    ((char[]){'I', 'n', 't', '3', '2', '\0'}),
-    ((char[]){'I', 'n', 't', '6', '4', '\0'}),
-    ((char[]){'f', 'l', 'o', 'a', 't', '\0'}),
-    ((char[]){'d', 'o', 'u', 'b', 'l', 'e', '\0'}),
-    ((char[]){'f', 'n', 'v', 'a', 'l', 'i', 'd', '\0'})};
+    ((char *)"Int08"),
+    ((char *)"Int16"),
+    ((char *)"Int24"),
+    ((char *)"Int32"),
+    ((char *)"Int64"),
+    ((char *)"float"),
+    ((char *)"double"),
+    ((char *)"fnvalid")};
 llong NumSys::numNames  = 7;
 
 NumSys::NumSys() {
