@@ -11,14 +11,16 @@
 //
 //=================================================================================================
 
-#define GIT_MARK     769
-#define VER_MAIN      1
-#define VER_POINT     0
-#define APP_NAME     "hematite"
-#define APP_ID_NM    "hematite"
-#define APP_DESC     "Wave File Analysis Tool"
-#define STR_CPYR     "Copyright © 2012 - 2022 Catraeus and Duncan Gray"
-#define STR_AUTH     "Catraeus and Duncan Gray"
-#define STR_URL      "http://www.catraeus.com"
-#define STR_URL_LBL  "www.catraeus.com"
+// WARNING Must be one and only included library root in any single project
+
+#define GIT_LIB_MARK     228
+#define VER_LIB_MAIN      1
+#define VER_LIB_POINT     0
+#define APP_LIB_NAME     "hematite"
+#define APP_LIB_ID_NM    "hematite"
+#define APP_LIB_DESC     "Wave File Analysis Tool"
+#define STR_LIB_CPYR     "Copyright © 2012 - 2022 Catraeus and Duncan Gray"
+#define STR_LIB_AUTH     "Catraeus and Duncan Gray"
+#define STR_LIB_URL      "http://www.catraeus.com"
+#define STR_LIB_URL_LBL  "www.catraeus.com"
 
