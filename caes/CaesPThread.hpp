@@ -34,13 +34,13 @@
 
 class PThread {
   public:
-                 PThread() {}
-   virtual      ~PThread() {}
+                  PThread(void *iD) : _thread((pthread_t)NULL), iD(iD) {}
+   virtual       ~PThread() {}
             bool  Spawn  () {
     int err;
     err = pthread_create(&_thread, NULL, Entry, this); // assumes pthread_create returns 0 meaning goodness
     if(err != 0)
-      fprintf(stderr, "Thread Join error: %s", strerror(err));
+      fprintf(stderr, "Thread Spawn error: %s", strerror(err));
     return err == 0;
     }
             bool  Join   () { // blocking function to hold up the thread spawning function until complete.
@@ -51,14 +51,15 @@ class PThread {
     return err == 0;
     }
   protected:
-    virtual void  Executor() = 0;  // Implement this in your derived version of the thread class.
+    virtual void  Executor(void *iD) = 0;  // Implement this in your derived version of the thread class.
   private:
     static  void *Entry(void *i_pInstance) { // Uses neither global nor static data, therefore thread safe by re-entrant safe.
                                              // Never make this in your derived class.
-      ((PThread *)i_pInstance)->Executor();
+      ((PThread *)i_pInstance)->Executor(((PThread *)i_pInstance)->iD);
       return NULL;
       }
   pthread_t _thread;
+    void   *iD;
   // Don't forget to grow this threaded class as needed
   };
 
