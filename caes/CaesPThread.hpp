@@ -44,12 +44,18 @@ class PThread {
     return err == 0;
     }
             bool  Join   () { // blocking function to hold up the thread spawning function until complete.
-    int err;
-    err = pthread_join(_thread, NULL);
-    if(err != 0)
-      fprintf(stderr, "Thread Join error: %s", strerror(err));
-    return err == 0;
-    }
+  int err;
+  err = pthread_join(_thread, NULL);
+  if(err != 0)
+    fprintf(stderr, "Thread Join error: %s", strerror(err));
+  return err == 0;
+}
+bool  JoinTry   () { // blocking function to hold up the thread spawning function until complete.
+  int err;
+
+  err = pthread_tryjoin_np(_thread, NULL);
+  return err == 0;
+}
   protected:
     virtual void  Executor(void *iD) = 0;  // Implement this in your derived version of the thread class.
   private:
