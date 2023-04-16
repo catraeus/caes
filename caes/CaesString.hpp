@@ -66,8 +66,8 @@ void IntWithComma        (char   *o_tStr,        llong   i_i                    
 void IntWithComma        (char   *o_tStr,        ullong  i_i                                      );
 void IntWithComma        (char   *o_tStr,        float   i_f                                      );
 void IntWithComma        (char   *o_tStr,        double  i_f                                      );
-void HexWith0x           (char   *o_tStr,        uint    i_i, llong i_places                      );
-void EngString           (char   *o_tStr,        double  i_f, llong i_places, char *i_units       );
+void HexWith0x           (char   *o_tStr,        uint    i_i, llong i_sigFigs                     );
+void EngString           (char   *o_tStr,        double  i_f, llong i_sigFigs, char *i_units      );
 bool StringLLong         (char   *i_tStr,        llong  *o_ll                                     );
 bool StringEng           (char   *i_tStr,        double *o_f                                      );
 void RatioString         (char   *o_tStr,        double  i_f                                      );

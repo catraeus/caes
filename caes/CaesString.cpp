@@ -854,28 +854,28 @@ void  IntWithComma          (char *o_tStr, ullong i_i) {
   IntWithComma(o_tStr, ll);
   return;
   }
-void  HexWith0x             (char *o_tStr, uint i_u, llong i_places) {
+void  HexWith0x             (char *o_tStr, uint i_u, llong i_sigFigs) {
   int b;
   uint dex;
 
-  for(dex=0; ((dex < i_places) && (dex < sizeof(uint))); dex++) {
+  for(dex=0; ((dex < i_sigFigs) && (dex < sizeof(uint))); dex++) {
     b = i_u & 0x0f;
     i_u >>= 4;
-    o_tStr[i_places + 1 - dex] = oomHexLookup[b];
+    o_tStr[i_sigFigs + 1 - dex] = oomHexLookup[b];
   }
   o_tStr[0] = '0';
   o_tStr[1] = 'x';
-  o_tStr[i_places + 2] = '\0';
+  o_tStr[i_sigFigs + 2] = '\0';
   return;
 }
 //Convert
-void  EngString             (char *o_tStr, double i_f, llong i_places,  char *i_units) {
+void  EngString             (char *o_tStr, double i_f, llong i_sigFigs,  char *i_units) {
   llong millenium;
   char fStr[256];
   char sStr[2];
 
   if(i_f == 0.0) {
-    sprintf(fStr, "%%.%lldlf %s", i_places, i_units);
+    sprintf(fStr, "%%.%lldlf %s", i_sigFigs, i_units);
     sprintf(o_tStr, fStr, 0.0);
     return;
     }
@@ -900,28 +900,27 @@ void  EngString             (char *o_tStr, double i_f, llong i_places,  char *i_
     }
 
   if((millenium == 15) && (i_f >= 1000.0)) {
-    o_tStr[0] = '\0';
-    strcat(o_tStr, sStr);
+    strcpy(o_tStr, sStr);
     strcat(o_tStr, "big");
     }
   else if((millenium == -18) &&(i_f < 1.0)) {
-    o_tStr[0] = '\0';
-    strcat(o_tStr, sStr);
+    strcpy(o_tStr, sStr);
     strcat(o_tStr, "small");
     }
   else {
-    millenium += 18;
+    millenium += 18;   // MAGICK this is because of the oomPrefix array
     millenium /= 3;
          if(i_f > 99.99999999)
-      i_places -= 3;
-    else if(i_f > 9.99999999)
-      i_places -= 2;
+      i_sigFigs -= 3;
+    else if(i_f > 9.999999999)
+      i_sigFigs -= 2;
     else
-      i_places -= 1;
+      i_sigFigs -= 1;
+    if(i_sigFigs < 0) i_sigFigs = 0;
     if(millenium == 6)
-      sprintf(fStr, "%s%%.%lldlf %s", sStr, i_places, i_units);
+      sprintf(fStr, "%s%%0.%lldlf %s", sStr, i_sigFigs, i_units);
     else
-      sprintf(fStr, "%s%%.%lldlf %c%s", sStr, i_places, oomPrefix[millenium], i_units);
+      sprintf(fStr, "%s%%0.%lldlf %c%s", sStr, i_sigFigs, oomPrefix[millenium], i_units);
     sprintf(o_tStr, fStr, i_f);
     }
   return;
