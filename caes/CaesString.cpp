@@ -46,7 +46,7 @@ enum  eStrEngState   {ESES_START, ESES_MANT, ESES_EXP, ESES_DONE, ESES_RES, ESES
 // Private
 llong  ParseEngMark          (char i_c);
 
-void  ToUpper               (char *i_string) {
+void   ToUpper               (char *i_string) {
   if(i_string == 0)
     return;
   if(strlen(i_string) == 0)
@@ -59,7 +59,7 @@ void  ToUpper               (char *i_string) {
     }
   return;
   }
-void  ToLower               (char *i_string) {
+void   ToLower               (char *i_string) {
   if(i_string == 0)
     return;
   if(strlen(i_string) == 0)
@@ -72,7 +72,7 @@ void  ToLower               (char *i_string) {
     }
   return;
   }
-void  ToUpperBlock          (char *i_string, ullong i_n) {
+void   ToUpperBlock          (char *i_string, ullong i_n) {
   ullong i;
   if(i_n == 0)
     return;
@@ -86,7 +86,7 @@ void  ToUpperBlock          (char *i_string, ullong i_n) {
     }
   return;
   }
-void  ToLowerBlock          (char *i_string, ullong i_n) {
+void   ToLowerBlock          (char *i_string, ullong i_n) {
   ullong i;
   if(i_n == 0)
     return;
@@ -104,7 +104,7 @@ void  ToLowerBlock          (char *i_string, ullong i_n) {
 
 
 
-void  StripNPTrail          (char *i_s) {
+void   StripNPTrail          (char *i_s) {
   char *p;
 
   p = &(i_s[strlen(i_s)]);
@@ -115,7 +115,7 @@ void  StripNPTrail          (char *i_s) {
   *p = '\0';
   return;
   }
-void  StripNPLead           (char *i_s) {
+void   StripNPLead           (char *i_s) {
   char *pSrc;
   char *pDst;
   char *pEnd;
@@ -137,7 +137,7 @@ void  StripNPLead           (char *i_s) {
   *pDst = '\0';
   return;
   }
-void  StripNPAll            (char *io_s) {
+void   StripNPAll            (char *io_s) {
   char *pSrc;
   char *pDst;
   char *pEnd;
@@ -158,7 +158,7 @@ void  StripNPAll            (char *io_s) {
   *pDst = '\0';
   return;
   }
-void  CompactAllNP          (char *io_s) {
+void   CompactAllNP          (char *io_s) {
   char *pSrc;
   char *pDst;
   char *pEnd;
@@ -187,7 +187,7 @@ void  CompactAllNP          (char *io_s) {
   *pDst = '\0';
   return;
   }
-void  PadSpaceLead          (char *io_tStr, ullong i_len) {
+void   PadSpaceLead          (char *io_tStr, ullong i_len) {
   if(strlen(io_tStr) >= i_len)
       return;
   char *pSrc;
@@ -201,7 +201,7 @@ void  PadSpaceLead          (char *io_tStr, ullong i_len) {
     *(pDst--) = ' ';
   return;
   }
-void  PadSpaceTrail         (char *io_tStr, ullong i_len) {
+void   PadSpaceTrail         (char *io_tStr, ullong i_len) {
   if(strlen(io_tStr) >= i_len)
       return;
   char   *pDst;
@@ -216,7 +216,7 @@ void  PadSpaceTrail         (char *io_tStr, ullong i_len) {
   *(pDst) = '\0';
   return;
   }
-char *FindAnyCharList       (char *i_s, char *i_f) {
+char  *FindAnyCharList       (char *i_s, char *i_f) {
 /*
   Given the unknown string, i_s and the reference string, i_f.  Convolve
     the i_f over the i_s until either you find a match or you get to the end.
@@ -266,7 +266,7 @@ char *FindAnyCharList       (char *i_s, char *i_f) {
   return o_pFound;
   }
 
-void  CleanupFileName       (char *io_path) {
+void   CleanupFileName       (char *io_path) {
   char *pSrc;
   char *pDst;
   bool  cleaning;
@@ -294,7 +294,7 @@ void  CleanupFileName       (char *io_path) {
   *pDst = '\0';
   return;
   }
-void  PathStringSplit       (char *i_path, char ***o_dirs, bool *o_isRootLevel, ullong *o_depth) {
+void   PathStringSplit       (char *i_path, char ***o_dirs, bool *o_isRootLevel, ullong *o_depth) {
   char   tStr[256];
   char  *pSrc;
   char  *pDst;
@@ -333,7 +333,7 @@ void  PathStringSplit       (char *i_path, char ***o_dirs, bool *o_isRootLevel, 
 
   return;
   }
-bool  PathExtractFileName   (char *i_path, char *o_fileName) {
+bool   PathExtractFileName   (char *i_path, char *o_fileName) {
   bool  success;
   char *pSrc;
   char *pDst;
@@ -366,7 +366,7 @@ bool  PathExtractFileName   (char *i_path, char *o_fileName) {
     }
   return success;
   }
-bool  PathExtractExt        (char *i_path, char *o_ext) {
+bool   PathExtractExt        (char *i_path, char *o_ext) {
 	  bool  success;
 	  char *pSrc;
 	  char *pDst;
@@ -396,7 +396,7 @@ bool  PathExtractExt        (char *i_path, char *o_ext) {
 	  *pDst = '\0';
 	  return success;
   }
-bool  PathExtractPath       (char *i_path, char *o_path) {
+bool   PathExtractPath       (char *i_path, char *o_path) {
   bool success;
   char *pDst;
 
@@ -419,7 +419,7 @@ bool  PathExtractPath       (char *i_path, char *o_path) {
   *pDst = '\0';
   return success;
   }
-bool  PathExtractLastDir    (char *i_path, char *o_dir) {
+bool   PathExtractLastDir    (char *i_path, char *o_dir) {
   bool    success;
   char   *pTmp;
   ullong  nClip;
@@ -449,7 +449,7 @@ bool  PathExtractLastDir    (char *i_path, char *o_dir) {
   o_dir[strlen(pTmp) - nClip] = '\0'; // strip away those ransid trailing '/'
   return success;
 }
-bool  PathExtractBase       (char *i_path, char *o_base) {
+bool   PathExtractBase       (char *i_path, char *o_base) {
   llong nStart;
   llong nStop;
   llong i;
@@ -497,7 +497,7 @@ bool  PathExtractBase       (char *i_path, char *o_base) {
 
   return true;
   }
-void  PathNameCleanup       (char *io_path) {
+void   PathNameCleanup       (char *io_path) {
   char *pSrc;
   char *pDst;
   bool  cleaning;
@@ -526,7 +526,7 @@ void  PathNameCleanup       (char *io_path) {
   return;
   }
 
-void  SecToHMS              (char *o_tStr, double i_t, bool i_padHours) {
+void   SecToHMS              (char *o_tStr, double i_t, bool i_padHours) {
   int    hr;
   int    min;
   int    sec;
@@ -559,7 +559,7 @@ void  SecToHMS              (char *o_tStr, double i_t, bool i_padHours) {
   strcat(o_tStr, tStr);
   return;
   }
-int   HMStoSec              (double *o_T,      char   *i_tStr) {
+int    HMStoSec              (double *o_T,      char   *i_tStr) {
   /*
   Rule 1:  there can be only numbers, : and .
   Rule 2:  the . has to be the last non number and only one of them
@@ -659,7 +659,7 @@ int   HMStoSec              (double *o_T,      char   *i_tStr) {
 // We're Done no matter what floobydust is left
   return 1;
   }
-void  ErrNoToString         (int i_errno, char *o_string) {
+void   ErrNoToString         (int i_errno, char *o_string) {
   switch(i_errno) {
     case 0                    : sprintf(o_string, "No error found."); break;
     case EPERM                : sprintf(o_string, "Operation not permitted."); break;
@@ -799,8 +799,41 @@ void  ErrNoToString         (int i_errno, char *o_string) {
   return;
   }
 
+double Gridder125            (double i_range,        ullong  i_count,        bool i_minVmax           ) {
+  static const llong g125[] = {1, 2, 5};
+  llong               exponent;
+  double              millenium;
+  double              testGridder;
+  double              maxCount;
+  double              gCount;
+  bool                notDone;
+  llong               gDex;
 
-void  IntWithComma          (char *o_tStr, llong  i_i) {
+  maxCount  = (double)i_count;
+  maxCount *= i_minVmax ?  2.333333333333333 : 1.0; // MAGICK The 2.333... is due to the ratio of ranges in the 1:2:5 sequence.
+  exponent =  -21;
+  gDex     =    0;
+  notDone  = true;
+  while(notDone) {
+    millenium   = pow(10.0, (double)exponent);
+    testGridder = (double)g125[gDex] * millenium;
+    gCount      = i_range/testGridder;
+    if(gCount < maxCount)
+      notDone = false;
+    else {
+      gDex++; if(gDex > 2) {
+        gDex = 0;
+        exponent += 3;
+      }
+    }
+  }
+
+
+  return (double)g125[gDex] * millenium;
+}
+
+
+void   IntWithComma          (char *o_tStr, llong  i_i) {
   char  tStr[1024];
   long  len;
   char *pSrc;
@@ -827,34 +860,34 @@ void  IntWithComma          (char *o_tStr, llong  i_i) {
   *(pDst++) = '\0';
   return;
   }
-void  IntWithComma          (char *o_tStr, double i_f) {
+void   IntWithComma          (char *o_tStr, double i_f) {
   llong kk = (llong)i_f;
   IntWithComma(o_tStr, kk);
   return;
   }
-void  IntWithComma          (char *o_tStr, float  i_f) {
+void   IntWithComma          (char *o_tStr, float  i_f) {
   double dd;
   dd = (double)i_f;
   IntWithComma(o_tStr, dd);
   return;
   }
-void  IntWithComma          (char *o_tStr, int i_i) {
+void   IntWithComma          (char *o_tStr, int i_i) {
   long long int kk = (long long int)i_i;
   IntWithComma(o_tStr, kk);
   return;
   }
-void  IntWithComma          (char *o_tStr, uint i_u) {
+void   IntWithComma          (char *o_tStr, uint i_u) {
   long long int kk = (long long int)i_u;
   IntWithComma(o_tStr, kk);
   return;
   }
-void  IntWithComma          (char *o_tStr, ullong i_i) {
+void   IntWithComma          (char *o_tStr, ullong i_i) {
   llong ll;
   ll = (llong)i_i;
   IntWithComma(o_tStr, ll);
   return;
   }
-void  HexWith0x             (char *o_tStr, uint i_u, llong i_sigFigs) {
+void   HexWith0x             (char *o_tStr, uint i_u, llong i_sigFigs) {
   int b;
   uint dex;
 
@@ -869,7 +902,7 @@ void  HexWith0x             (char *o_tStr, uint i_u, llong i_sigFigs) {
   return;
 }
 //Convert
-void  EngString             (char *o_tStr, double i_f, llong i_sigFigs,  char *i_units) {
+void   EngString             (char *o_tStr, double i_f, llong i_sigFigs,  char *i_units) {
   llong millenium;
   char fStr[256];
   char sStr[2];
@@ -925,7 +958,7 @@ void  EngString             (char *o_tStr, double i_f, llong i_sigFigs,  char *i
     }
   return;
   }
-bool  StringEng             (char *i_tStr, double *o_f) {
+bool   StringEng             (char *i_tStr, double *o_f) {
   eSciEng      sciEng   = ESE_NUM;
   eStrEngState state    = ESES_START;
   bool         gotMantPeriod = false;
@@ -1043,10 +1076,10 @@ bool  StringEng             (char *i_tStr, double *o_f) {
   *o_f = dMant * pow(10.0, ((double)iExp));
   return state != ESES_BAD;
   }
-bool  StringLLong           (char *i_s, llong *o_ll) {
+bool   StringLLong           (char *i_s, llong *o_ll) {
   return true;
 }
-llong ParseEngMark          (char i_c) {
+llong  ParseEngMark          (char i_c) {
   int    engExp = -18;
   bool   gotIt  = false;
   char  *pSrc   = (char *)oomPrefix;
@@ -1065,7 +1098,7 @@ llong ParseEngMark          (char i_c) {
     engExp = 999;  // Biggest double possible is 1.7976931348623157e308  This marks as non-exponent.
   return engExp;
   }
-void  RatioString           (char *o_tStr, double i_f) {
+void   RatioString           (char *o_tStr, double i_f) {
   if(i_f == 1.0) {
     sprintf(o_tStr, "1:1");
     }
@@ -1081,7 +1114,7 @@ void  RatioString           (char *o_tStr, double i_f) {
     }
   return;
   }
-bool  IsLLongDec            (char *i_s) {
+bool   IsLLongDec            (char *i_s) {
   bool     result;
   char    *p;
 
@@ -1104,7 +1137,7 @@ bool  IsLLongDec            (char *i_s) {
 
   return result;
   }
-bool  IsDoubleFixed         (char *i_s) {
+bool   IsDoubleFixed         (char *i_s) {
   bool     result;
   char    *p;
   bool     foundDot;

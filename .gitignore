@@ -4,4 +4,4 @@ Debug/src/*.d
 /Release/*.so
 Release/src/*.o
 Release/src/*.d
-
+doit
