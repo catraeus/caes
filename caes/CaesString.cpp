@@ -1059,7 +1059,6 @@ bool   StringEng             (char *i_tStr, double *o_f) {
           }
         }
         else if(*pSrc == '\0') {
-          fprintf(stderr, "StringEng() end clean\n");fflush(stderr);
           state = ESES_DONE;
         }
         else {
