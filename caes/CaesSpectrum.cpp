@@ -152,11 +152,7 @@ void SpecTran::DFTrPS       ( void                          ) {
     FFTvDFT = true;
   }
   // And now!  Powerize the spectrum.
-  for(ullong ii = 0; ii < Nt; ii++)    fRe[ii] *= fRe[ii];
-  for(ullong ii = 0; ii < Nt; ii++)    fIm[ii] *= fIm[ii];
-  for(ullong ii = 0; ii < Nt; ii++)    fRe[ii] += fIm[ii];
-  for(ullong ii = 0; ii < Nt; ii++)    fRe[ii] = sqrt(fRe[ii]);
-
+  ToPS();
   return;
   }
 void SpecTran::DFTc         ( void                          ) {
@@ -207,3 +203,10 @@ void SpecTran::DFTlinPhase  ( void                          ) { // Assumes symme
     fRe[i] /= (double)Ncos;
   return;
   }
+void SpecTran::ToPS         ( void                          ) {
+  for(ullong ii = 0; ii < Nt; ii++)    fRe[ii] *= fRe[ii];
+  for(ullong ii = 0; ii < Nt; ii++)    fIm[ii] *= fIm[ii];
+  for(ullong ii = 0; ii < Nt; ii++)    fRe[ii] += fIm[ii];
+  for(ullong ii = 0; ii < Nt; ii++)    fRe[ii]  = sqrt(fRe[ii]);
+  return;
+}

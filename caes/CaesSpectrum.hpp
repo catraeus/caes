@@ -49,12 +49,14 @@ class SpecTran {
             void  SetTimeAry  ( double *i_tRe, double *i_tIm );
             void  SetFreqAry  ( double *i_fRe, double *i_fIm );
     virtual      ~SpecTran    ( void                         );
-            void  Resize      (ullong   i_Nt,  ullong  i_Nf  );
+            void  Resize      ( ullong   i_Nt, ullong  i_Nf  );
+            void  Calc        ( void                         );
             void  FFTr        ( void                         );
             void  FFTc        ( void                         );
             void  DFTrPS      ( void                         );
             void  DFTc        ( void                         );
             void  DFTlinPhase ( void                         );
+            void  ToPS        ( void                         );
             bool  GetFFTvDFT  ( void                         ) {return FFTvDFT;};
   private:
     double  *tRe;   //!< Real time input -- deltaT always 1.0
