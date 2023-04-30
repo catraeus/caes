@@ -58,19 +58,23 @@
   fP      = 0.5;
 
 
-  c       = new double*[2048];  for(uint ii=0; ii<8192; ii++)    c[ii] = new double[2048];
-  s       = new double*[2048];  for(uint ii=0; ii<8192; ii++)    s[ii] = new double[2048];
+  c = new double*[EK_DFT];  for(uint ii=0; ii<EK_DFT; ii++)    c[ii] = new double[EK_DFT];
+  s = new double*[EK_DFT];  for(uint ii=0; ii<EK_DFT; ii++)    s[ii] = new double[EK_DFT];
 
   Nt      = 1;
   Nf      = 1;
-  isOdd   = false;
-  tFFT    = new FFT();
-  FFTvDFT = true;
+
+  isOdd     = false;
+  doFFTvDFT = true;
+
+  tFFT      = new FFT();
+
+  return;
 }
      SpecTran::~SpecTran    ( void                          ) {
-  for(uint ii=0; ii<8192; ii++)    delete c[ii];
+  for(uint ii=0; ii<EK_DFT; ii++)    delete c[ii];
   delete c;
-  for(uint ii=0; ii<8192; ii++)    delete s[ii];
+  for(uint ii=0; ii<EK_DFT; ii++)    delete s[ii];
   delete s;
 }
 void SpecTran::SetTimeAry   ( double *i_tRe, double *i_tIm  ) {
@@ -105,9 +109,9 @@ void SpecTran::Resize       ( ullong  i_Nt,  ullong  i_Nf   ) {
   Nf = i_Nf;
   isOdd   = ((int)((uint)Nf & 0x00000001) == 1);
   tFFT->SetLen(Nt);
-  FFTvDFT = false;
+  doFFTvDFT = false;
   if((Nt > EK_DFT) || (Nf > EK_DFT)) {
-    FFTvDFT = true;
+    doFFTvDFT = true;
     return;
   }
   tT      = -0.5 * ((double)(Nt - 1)); // in N domain, not w.  This makes the time sample symmetrical about its center.
@@ -125,34 +129,38 @@ void SpecTran::Resize       ( ullong  i_Nt,  ullong  i_Nf   ) {
     }
   return;
   }
+
+void SpecTran::Calc         ( void                          ) {
+  if(tRe == NULL)
+    return;
+  if(Nt <=  EK_DFT) {
+    doFFTvDFT = false;
+    DFTr();
+  }
+  else {
+    doFFTvDFT = true;
+    FFTr();
+  }
+  return;
+}
+
 void SpecTran::FFTr         ( void                          ) {
-  fprintf(stderr, "We just did nothing in SpecTran::FFTr\n"); fflush(stderr);
+  tFFT->Calc();
   return;
   }
 void SpecTran::FFTc         ( void                          ) {
   fprintf(stderr, "We just did nothing in SpecTran::FFTc\n"); fflush(stderr);
   return;
   }
-void SpecTran::DFTrPS       ( void                          ) {
-  if(tRe == 0)
-    return;
-  if(Nt <=  EK_DFT) {
-    FFTvDFT = false;
-    for(ullong fDex = 0; fDex < Nf; fDex++) { // HOORAY This is IT, man ... do the transform cha-cha ... cha-cha
-      fRe[fDex] = 0.0;
-      fIm[fDex] = 0.0;
-      for(ullong tDex=0; tDex < Nt; tDex++) {
-        fRe[fDex] += c[fDex][tDex] * tRe[tDex];
-        fIm[fDex] += s[fDex][tDex] * tRe[tDex];
-      }
+void SpecTran::DFTr         ( void                          ) {
+  for(ullong fDex = 0; fDex < Nf; fDex++) { // HOORAY This is IT, man ... do the transform cha-cha ... cha-cha
+    fRe[fDex] = 0.0;
+    fIm[fDex] = 0.0;
+    for(ullong tDex=0; tDex < Nt; tDex++) {
+      fRe[fDex] += c[fDex][tDex] * tRe[tDex];
+      fIm[fDex] += s[fDex][tDex] * tRe[tDex];
     }
   }
-  else {
-    tFFT->Calc();
-    FFTvDFT = true;
-  }
-  // And now!  Powerize the spectrum.
-  ToPS();
   return;
   }
 void SpecTran::DFTc         ( void                          ) {

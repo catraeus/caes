@@ -53,11 +53,11 @@ class SpecTran {
             void  Calc        ( void                         );
             void  FFTr        ( void                         );
             void  FFTc        ( void                         );
-            void  DFTrPS      ( void                         );
+            void  DFTr        ( void                         );
             void  DFTc        ( void                         );
             void  DFTlinPhase ( void                         );
             void  ToPS        ( void                         );
-            bool  GetFFTvDFT  ( void                         ) {return FFTvDFT;};
+            bool  GetFFTvDFT  ( void                         ) {return doFFTvDFT;};
   private:
     double  *tRe;   //!< Real time input -- deltaT always 1.0
     double  *tIm;   //!< Imaginary time input -- deltaT always 1.0
@@ -70,7 +70,7 @@ class SpecTran {
     ullong   Nf;    //!< Size of the frequency output array
     ullong   Nt;    //!< Size of the time input array
     bool     isOdd;
-    bool     FFTvDFT;
+    bool     doFFTvDFT;
 
     FFT     *tFFT;
   };
