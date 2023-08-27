@@ -7,7 +7,7 @@
 // Creation Date      : Sept 12, 2015
 // Copyright          : Copyright © 2015 by Catraeus and Duncan Gray
 //
-// Description        :
+// Description        : Hierarchical Tree Functionality
 /*
     This is a hierarchical tree.  Add, move, prune ... lots of stuff.
     Scary thing for future design --- threadsafety.  Some static methods that lock the db and queue up requests.
@@ -60,8 +60,8 @@
 //
 //=================================================================================================
 
-#ifndef __CAEV_HEITREE_HPP_
-#define __CAEV_HEITREE_HPP_
+#ifndef __CAES_HEITREE_HPP_
+#define __CAES_HEITREE_HPP_
 
 class HeiTree {
   private:
@@ -79,9 +79,9 @@ class HeiTree {
                      HeiTree (void *       );
     virtual         ~HeiTree (             );
             void    *Get     (void         ) {return conts;};
-            HeiTree *Find    (void *i_conts);
-            HeiTree *Append  (void *i_conts);
-            HeiTree *Hang    (void *i_conts);
+            HeiTree *Find    (void *i_conts); // Hmmm, so the pointer has to be unique ? FIXME
+            HeiTree *Append  (void *i_conts); // Add a peer to this node
+            HeiTree *Hang    (void *i_conts); // Add a child to this node
             void     Attach  (void *i_conts) {conts = i_conts; return;}
             void     Klunk   (void) {delete this; return;};
   private:
@@ -97,4 +97,4 @@ class HeiTree {
     sTreeMeta       *meta;
   };
 
-#endif // __CAEV_HEITREE_HPP_
+#endif // __CAES_HEITREE_HPP_

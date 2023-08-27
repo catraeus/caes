@@ -1,4 +1,5 @@
 
+// $Id: A $
 
 //=================================================================================================
 // Original File Name : CaesTypes.hpp
@@ -61,7 +62,7 @@ static const llong   MAX_NAME_LEN    =   256;
 static const llong   MAX_LINE_LEN    = 32768;
 static const llong   MAX_LIST_LEN    = 32768;
 static const llong   MAX_CFG_LINES   = 32768;
-static const llong   MIN_PATH_LEN    =   256;
+static const llong   MIN_PATH_LEN    =  4192;
 static const llong   MAX_DIR_ENTRIES = 32768;
 
 static const llong   GCC_FLOAT_LD_EXP  =  15; //
