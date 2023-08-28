@@ -13,7 +13,7 @@
 
 // WARNING Must be one and only included library root in any single project
 
-#define GIT_LIB_MARK     247
+#define GIT_LIB_MARK     248
 #define VER_LIB_MAIN       1
 #define VER_LIB_POINT      0
 #define APP_LIB_NAME      "caeslib"

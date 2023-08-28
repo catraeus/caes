@@ -60,8 +60,8 @@
 //
 //=================================================================================================
 
-#ifndef __CAES_HEITREE_HPP_
-#define __CAES_HEITREE_HPP_
+#ifndef __CAES_HEI_TREE_HPP_
+#define __CAES_HEI_TREE_HPP_
 
 class HeiTree {
   private:
@@ -97,4 +97,4 @@ class HeiTree {
     sTreeMeta       *meta;
   };
 
-#endif // __CAES_HEITREE_HPP_
+#endif // __CAES_HEI_TREE_HPP_
