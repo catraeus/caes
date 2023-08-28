@@ -9,7 +9,7 @@
 //
 // Description        : Hierarchical Tree Functionality
 /*
-    This is a hierarchical tree.  Add, move, prune ... lots of stuff.
+    This is a hierarchical tree.  Add, move, prune, traverse ... lots of stuff.
     Scary thing for future design --- threadsafety.  Some static methods that lock the db and queue up requests.
     The user has a pointer to an instance.  The instance is a member of a tree.
     Metadata about the whole tree is:
@@ -63,38 +63,41 @@
 #ifndef __CAES_HEI_TREE_HPP_
 #define __CAES_HEI_TREE_HPP_
 
-class HeiTree {
+template <typename T> class HeiTree {
   private:
     enum eConst {
       MAX_SIZE = 32768
       };
     struct sTreeMeta {
-      HeiTree  *head;
-      long      depth;
-      HeiTree **line;
-      long      size;
+      HeiTree<T>   *head;
+      long          depth;
+      HeiTree<T>  **line;
+      long          size;
       };
   public:
-                     HeiTree (             );
-                     HeiTree (void *       );
-    virtual         ~HeiTree (             );
-            void    *Get     (void         ) {return conts;};
-            HeiTree *Find    (void *i_conts); // Hmmm, so the pointer has to be unique ? FIXME
-            HeiTree *Append  (void *i_conts); // Add a peer to this node
-            HeiTree *Hang    (void *i_conts); // Add a child to this node
-            void     Attach  (void *i_conts) {conts = i_conts; return;}
-            void     Klunk   (void) {delete this; return;};
+                        HeiTree (             );
+                        HeiTree (void *       );
+    virtual            ~HeiTree (             );
+            T          *Get     (void         ) {return conts;};
+            HeiTree<T> *Find    (T    *i_conts); // Hmmm, so the pointer has to be unique ? FIXME
+            HeiTree<T> *Append  (T    *i_conts); // Add a peer to this node
+            HeiTree<T> *Hang    (T    *i_conts); // Add a child to this node
+            void        Attach  (T    *i_conts) {conts = i_conts; return;}
+            void        Klunk   (void) {delete this; return;};
   private:
-                     HeiTree (HeiTree *i_HT);
+                        HeiTree (HeiTree *i_HT);
   private:
-    HeiTree         *up;
-    HeiTree         *dn;
-    HeiTree         *pred;
-    HeiTree         *succ;
-    void            *conts;
+    HeiTree<T>      *up;
+    HeiTree<T>      *dn;
+    HeiTree<T>      *pred;
+    HeiTree<T>      *succ;
+    T               *conts;
     int              index;
     int              depth;
     sTreeMeta       *meta;
+    static HeiTree<T> baseTree;
   };
+
+#include "CaesHeiTree.tpp"
 
 #endif // __CAES_HEI_TREE_HPP_

@@ -10,9 +10,8 @@
 //=================================================================================================
 
 
-#include "CaesHeiTree.hpp"
 
-HeiTree::HeiTree()
+template <typename T> HeiTree<T>::HeiTree()
 : up     (0)
 , dn     (0)
 , pred   (0)
@@ -23,7 +22,7 @@ HeiTree::HeiTree()
 , meta   (0) { // Start a whole new tree
   meta          = new sTreeMeta;
   meta->head    = this;
-  meta->line    = new HeiTree*[MAX_SIZE];
+  meta->line    = new HeiTree<T>*[MAX_SIZE];
   meta->size    = 0;
   index         = 0;
   depth         = 1;
@@ -31,7 +30,7 @@ HeiTree::HeiTree()
   meta->depth   = 1;
   meta->size    = 1;
   }
-HeiTree::HeiTree(HeiTree *i_HT)
+template <typename T> HeiTree<T>::HeiTree(HeiTree *i_HT)
 : up     (0)
 , dn     (0)
 , pred   (0)
@@ -47,9 +46,9 @@ HeiTree::HeiTree(HeiTree *i_HT)
   index = meta->size;
   meta->size++; // ibid.
   }
-HeiTree::~HeiTree() {
+template <typename T> HeiTree<T>::~HeiTree() {
   }
-HeiTree *HeiTree::Find(void *i_conts) {
+template <typename T> HeiTree<T> *HeiTree<T>::Find(T *i_conts) {
   HeiTree *tHT;
 
   tHT = meta->head;
@@ -71,7 +70,7 @@ HeiTree *HeiTree::Find(void *i_conts) {
   else
     return  tHT;
   }
-HeiTree *HeiTree::Append(void *i_conts) {
+template <typename T> HeiTree<T> *HeiTree<T>::Append(T *i_conts) {
   HeiTree *tHT;
 
   tHT = this;
