@@ -62,42 +62,37 @@
 
 #ifndef __CAES_HEI_TREE_HPP_
 #define __CAES_HEI_TREE_HPP_
+#include <stdlib.h>
 
-template <typename T> class HeiTree {
+class HeiTree {
   private:
     enum eConst {
       MAX_SIZE = 32768
       };
-    struct sTreeMeta {
-      HeiTree<T>   *head;
-      long          depth;
-      HeiTree<T>  **line;
-      long          size;
+    struct sNode {
+      sNode    *parent;
+      sNode    *child;
+      sNode    *prev;
+      sNode    *next;
+      void     *conts;
       };
   public:
-                        HeiTree (             );
-                        HeiTree (void *       );
-    virtual            ~HeiTree (             );
-            T          *Get     (void         ) {return conts;};
-            HeiTree<T> *Find    (T    *i_conts); // Hmmm, so the pointer has to be unique ? FIXME
-            HeiTree<T> *Append  (T    *i_conts); // Add a peer to this node
-            HeiTree<T> *Hang    (T    *i_conts); // Add a child to this node
-            void        Attach  (T    *i_conts) {conts = i_conts; return;}
-            void        Klunk   (void) {delete this; return;};
+                        HeiTree (void         );
+    virtual            ~HeiTree (void         );
+           void         GoRoot    (void         ) {node = root; return;};
+           void         GoUp      (void         ) {if(node->parent   != NULL) node = node->parent; return;};
+           void         GoDown    (void         ) {if(node->child    != NULL) node = node->child;  return;};
+           void         GoPrev    (void         ) {if(node->prev     != NULL) node = node->prev;   return;};
+           void         GoNext    (void         ) {if(node->next     != NULL) node = node->next;   return;};
+           void        *GetConts  (void         ) {return node->conts;};
+           void         Find      (void *i_conts); // Hmmm, so the pointer has to be unique ? FIXME
+           void         AddPeer   (void *i_conts);
+           void         AddChild  (void *i_conts);
+           void         Attach    (void *i_conts) {node->conts = i_conts; return;}
   private:
-                        HeiTree (HeiTree *i_HT);
-  private:
-    HeiTree<T>      *up;
-    HeiTree<T>      *dn;
-    HeiTree<T>      *pred;
-    HeiTree<T>      *succ;
-    T               *conts;
-    int              index;
-    int              depth;
-    sTreeMeta       *meta;
-    static HeiTree<T> baseTree;
+           sNode      *root;
+           sNode      *node;
   };
 
-#include "CaesHeiTree.tpp"
 
 #endif // __CAES_HEI_TREE_HPP_
