@@ -132,6 +132,9 @@ void WaveGUID::ToString(GUID *i_id, char *s) {
     strcat(s, t);
   } strcat(s, "}");
 }
+void WaveGUID::SetType(eType i_type) {
+  return;
+}
 /*
 void WaveGUID::ByteToHexString(char *t, byte i) {
   unsigned char j;

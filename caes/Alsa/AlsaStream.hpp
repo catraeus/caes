@@ -110,7 +110,7 @@ class AlsaStream {
     eResamp                 resample;
     snd_pcm_access_t        buffAccess;
 
-    u_char                 *pAudBlk;
+    uchar                 *pAudBlk;
 
     bool                    memMapped;     // warning ... this is a setup variable that gets packed into ALSA shit for real elsewhere
     bool                    interleaved;   // likewise.

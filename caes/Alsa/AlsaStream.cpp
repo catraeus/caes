@@ -356,7 +356,7 @@ void AlsaStream::SetBufferSpace(void) {
     delete[] pAudBlk;
     pAudBlk = NULL;
     }
-  pAudBlk = new u_char[bufferBytes];
+  pAudBlk = new uchar[bufferBytes];
   if(pAudBlk == NULL) {
     fprintf(stdout, "Unable to allocate memory for the pAudBlk array.\n");
     err = true;
@@ -383,7 +383,7 @@ void AlsaStream::Params(void) {
   snd_pcm_uframes_t start_threshold;
   snd_pcm_uframes_t stop_threshold;
 
-  pAudBlk = (u_char *)malloc(GetMaxBufferBytes());
+  pAudBlk = (uchar *)malloc(GetMaxBufferBytes());
   if(pAudBlk == NULL) {
     error("not enough memory");
     err = -1;

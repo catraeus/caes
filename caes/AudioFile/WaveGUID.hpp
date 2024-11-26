@@ -66,8 +66,9 @@ class WaveGUID {
             const char       *GetPreso        ( void                              ) { return gRec.preso; };
             const char       *GetName         ( void                              ) { return gRec.name;  };
             const eType       GetType         ( void                              ) { return gRec.type;  };
+            const byte       *GetID           ( void                              ) { return gRec.id.bytes;  };
   private:
-                  void        BuildGRec       ( GRec  *io_gRec, eType i_type, byte *i_id, char *i_name)    ;
+                  void        BuildGRec       ( GRec  *io_gRec, eType i_type, byte *i_id, char *i_name)   ;
                   void        ToString        ( GUID  *i_id,   char *s            )                       ;
           //        void        ByteToHexString ( char  *t,      byte i, int dig    )                       ;
   public:
